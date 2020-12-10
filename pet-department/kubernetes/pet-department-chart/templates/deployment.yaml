@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pet-store
+  labels:
+    app: pet-department
+spec:
+  replicas: {{ .Values.deployment.replicas }}
+  selector:
+    matchLabels:
+      app: pet-department
+  template:
+    metadata:
+      labels:
+        app: pet-department
+    spec:
+      containers:
+      - name: pet-department
+        image: nginx
+        imagePullPolicy: Never
+        ports:
+        - name: web
+          containerPort: 80
+          protocol: TCP
+          

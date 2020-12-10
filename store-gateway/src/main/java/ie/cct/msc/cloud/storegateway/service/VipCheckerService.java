@@ -1,20 +1,33 @@
 package ie.cct.msc.cloud.storegateway.service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
 
-import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
+import com.google.gson.Gson;
 
 import ie.cct.msc.cloud.storegateway.domain.IsVip;
-import ie.cct.msc.cloud.storegateway.domain.Product;
-import reactor.core.publisher.Mono;
 
 public class VipCheckerService {
 	
 	public boolean isVipCode(String code) {
-		ResponseSpec retrieve = WebClient.builder().baseUrl("http://localhost:8082/user/" + code).build().get().retrieve(); // execute
-		Mono<IsVip> bodyToMono = retrieve.bodyToMono(IsVip.class);
-		return bodyToMono.block().isVip();
+	    HttpClient client = HttpClient.newHttpClient();
+	    HttpRequest request = HttpRequest.newBuilder()
+	          .uri(URI.create("http://vip-service/user/" + code))
+	          .build();
+
+	    HttpResponse<String> response;
+		try {
+			response = client.send(request, BodyHandlers.ofString());
+			String body = response.body();
+			Gson g = new Gson();
+			IsVip isVip = g.fromJson(body, IsVip.class);
+			return isVip.isVip();
+		} catch (Exception e) {
+      e.printStackTrace();
+			return false;
+		}
 	}
 }

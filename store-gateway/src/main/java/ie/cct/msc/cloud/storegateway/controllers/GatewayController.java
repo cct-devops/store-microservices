@@ -29,6 +29,7 @@ public class GatewayController {
 	
 	@GetMapping("/api/all-products")
 	public List<Product> getAllProducts(@RequestParam(name = "vipcode", required = true) String vipCode) {
+		System.out.println("request received");
 		if(vipCheckerService.isVipCode(vipCode)) {
 			List<Product> petProducts = new ArrayList<>();
 			List<Product> techProducts = new ArrayList<>();

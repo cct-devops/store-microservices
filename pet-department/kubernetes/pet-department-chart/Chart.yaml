@@ -1,0 +1,6 @@
+apiVersion: v2
+name: pet-department-chart
+description: A Helm chart my pet department
+type: application
+version: 0.1.0
+appVersion: 1.16.0

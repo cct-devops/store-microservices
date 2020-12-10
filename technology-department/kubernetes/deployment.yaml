@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: technology-department
+  labels:
+    app: technology-department
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: technology-department
+  template:
+    metadata:
+      labels:
+        app: technology-department
+    spec:
+      containers:
+      - name: technology-department
+        image: technology-department
+        imagePullPolicy: Never
+        ports:
+        - name: web
+          containerPort: 8081
+          protocol: TCP
+          

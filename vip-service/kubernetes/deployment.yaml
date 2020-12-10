@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vip-service
+  labels:
+    app: vip-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: vip-service
+  template:
+    metadata:
+      labels:
+        app: vip-service
+    spec:
+      containers:
+      - name: vip-service
+        image: vip-service:1.0
+        imagePullPolicy: Never
+        ports:
+        - name: web
+          containerPort: 5000
+          protocol: TCP
+          

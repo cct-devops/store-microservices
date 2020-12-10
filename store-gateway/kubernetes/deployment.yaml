@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: store-gateway
+  labels:
+    app: store-gateway
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: store-gateway
+  template:
+    metadata:
+      labels:
+        app: store-gateway
+    spec:
+      containers:
+      - name: store-gateway
+        image: store-gateway:1.1
+        imagePullPolicy: Never
+        ports:
+        - name: web
+          containerPort: 3000
+          protocol: TCP
+          

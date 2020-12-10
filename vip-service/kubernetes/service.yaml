@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: vip-service
+spec:
+  type: ClusterIP
+  selector:
+    app: vip-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: web
